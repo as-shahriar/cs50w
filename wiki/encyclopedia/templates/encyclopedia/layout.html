@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="row">
+      <div class="sidebar col-lg-2 col-md-3">
+        <h2>Wiki</h2>
+        <form action="{% url 'search' %}">
+          <input
+            class="search"
+            type="text"
+            name="q"
+            placeholder="Search Encyclopedia"
+          />
+        </form>
+        <div>
+          <a href="{% url 'index' %}">Home</a>
+        </div>
+        <div>
+          <a href="{% url 'create' %}">Create New Page</a>
+        </div>
+        <div>
+          <a href="{% url 'random' %}">Random Page</a>
+        </div>
+        {% block nav %} {% endblock %}
+      </div>
+      <div class="main col-lg-10 col-md-9">
+        {% block body %} {% endblock %}
+      </div>
+    </div>
+  </body>
+  <style>
+    a {
+      color: black;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: black;
+    }
+    li {
+      list-style: none;
+    }
+  </style>
+</html>
