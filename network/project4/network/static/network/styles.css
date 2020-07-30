@@ -1,0 +1,17 @@
+.my-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.like img {
+  width: 25px;
+  cursor: pointer;
+}
+
+.edit {
+  cursor: pointer;
+}
+
+.post {
+  white-space: pre-wrap;
+}

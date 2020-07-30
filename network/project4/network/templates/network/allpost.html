@@ -1,0 +1,92 @@
+{% extends "network/layout.html" %} {% load static %}{% block body %}
+<h2>All Posts</h2>
+<div class="card">
+  <div class="card-body my-card">
+    Add New Post
+    <textarea class="mt-2 form-control" id="add-text" rows="3"></textarea>
+    <div class="mt-2 d-flex justify-content-end">
+      <button type="submit" id="add-btn" class="btn btn-success">Post</button>
+    </div>
+  </div>
+</div>
+<div id="root"></div>
+{% for post in posts %}
+<div class="card my-2">
+  <div class="card-body my-card">
+    <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+        <a href="{% url 'profile' post.user.username%}"
+          ><span class="text-secondary">{{post.user.username}}</span></a
+        >
+      </div>
+      <div class="w-100 d-flex justify-content-end">
+        <span class="mx-2 text-secondary">{{post.timestamp}}</span
+        >{%if request.user == post.user%}<span class="text-primary edit" data-id="{{post.id}}" id="edit-btn-{{post.id}}">Edit</span>{%endif%}
+      </div>
+    </div>
+    <span id="post-content-{{post.id}}" class="post">{{post.post}}</span>
+    <textarea data-id="{{post.id}}" id="post-edit-{{post.id}}" style="display:none;" class="form-control textarea" row="3">{{post.post}}</textarea>
+    
+    <div class="like mt-3">
+
+    
+      <img
+      data-id="{{post.id}}"
+      id="post-like-{{post.id}}"
+        class="liked"
+        {% if not request.user in post.like.all %}
+        data-is_liked="no"
+        src="https://img.icons8.com/carbon-copy/100/000000/like--v2.png"
+{%else%}
+data-is_liked="yes"
+        src="https://img.icons8.com/plasticine/100/000000/like.png"
+        {%endif%}
+      />
+      
+      <span id="post-count-{{post.id}}">{{post.like.count}}</span>
+    </div>
+  </div>
+</div>
+{%endfor%}
+<div class="d-flex justify-content-end my-3">
+  <nav aria-label="Page navigation ">
+    <ul class="pagination">
+    {% if posts.has_previous %}
+    <li class="page-item">
+      <li class="page-item">
+        <a class="page-link" href="?page={{posts.previous_page_number}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      {%else%}
+        <li class="page-item">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      {%endif%}
+{% if posts.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{posts.next_page_number}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+      {%else%}
+       <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+      {%endif%}
+    </ul>
+  </nav>
+</div>
+{% endblock %}
+
+{% block script %} <script src="{% static 'network/addpost.js'%}"></script> {% endblock %}
+
