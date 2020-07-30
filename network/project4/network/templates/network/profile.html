@@ -43,7 +43,7 @@
         >{%if request.user == post.user%}<span class="text-primary edit" data-id="{{post.id}}" id="edit-btn-{{post.id}}">Edit</span>{%endif%}
       </div>
     </div>
-    <span id="post-content-{{post.id}}" class="post" >{{post.post|linebreaks}}</span>
+    <span id="post-content-{{post.id}}" class="post" >{{post.post}}</span>
     <textarea data-id="{{post.id}}" id="post-edit-{{post.id}}" style="display:none;" class="form-control textarea" row="3">{{post.post}}</textarea>
     <div class="like mt-3">
 
